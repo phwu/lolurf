@@ -31,6 +31,4 @@ node_modules
 /.c9/
 
 #config
-etc
-etc/passwd
-etc/*
+config.js
