@@ -1,0 +1,19 @@
+# TODO 
+Organize files properly
+Setup Mongoose
+Setup Frontend
+
+# Notes
+bower.json is for front-end components
+gruntfile.js will help you build
+karma.conf.js is for testing your js
+package.json is for your backend node dependencies
+
+# Helpful references
+Date to Long converter https://jsfiddle.net/px7vjhno/
+Walkthrough http://www.raywenderlich.com/61078/write-simple-node-jsmongodb-web-service-ios-app
+Mongo driver http://mongodb.github.io/node-mongodb-native/2.0/
+Mongoose
+Express
+AngularJS
+MEANJS http://meanjs.org/docs.html

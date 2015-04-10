@@ -24,7 +24,3 @@ app.use(function (req,res) {
 http.createServer(app).listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
-
-//Date to Long converter https://jsfiddle.net/px7vjhno/
-//Walkthrough http://www.raywenderlich.com/61078/write-simple-node-jsmongodb-web-service-ios-app
-//Mongo driver http://mongodb.github.io/node-mongodb-native/2.0/

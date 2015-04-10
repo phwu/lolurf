@@ -1,12 +1,6 @@
 /* *
-* This is a utility class that accepts a start Day and end Day and 
-* will make calls for match ids to fill the table. The day will
-* automatically begin at 00:00 and the end day will be 23:55.
-*
-* It is assumed that this is only for URF games during the
-* API Challenge so only April's data will be applied
-*
-* This is a temporary solution to creating a batch job
+Due to the limitations of the mongo db accepting up to 1000 documents per batch
+the util class will accept time in Long type to process (insert into db collection)
 * */
 
 var fs = require('fs');
@@ -14,11 +8,50 @@ var https = require('https');
 var config = require('../config/');
 var MongoClient = require('mongodb').MongoClient,
 	assert = require('assert');
+/*var mongoose = require('mongoose');
+var uriUtil= require('mongoose-uri');
 
-var matchesArray = [];
+var options = {
+	server: {
+		socketOptions: {
+			keepAlive: 1,
+			connectTimeOutMS: 30000
+		}
+	},
+	replset: {
+		socketOptions: {
+			keepAlive: 1,
+			connectTimeoutMS: 30000
+		}
+	}
+};
+
+var mongodbUri = 'mongodb://'+config.mongo.user+':'+config.mongo.pw+'@'+config.mongo.host+':'+config.mongo.port+'/'+config.mongo.db;
+var mongooseUri = uriUtil.formatMongoose(mongodbUri);
+
+mongoose.connect(mongooseUri, options);
+
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+
+db.once('open', function callback () {
+	
+	// game schema
+	var gameSchema = mongoose.Schema({
+		gameId: Number,
+		date: Number
+	});
+	
+	// store match document in a matchIds collectin
+	var Game = mongoose.model('games', gameSchema);
+	
+	
+});*/
+
 
 // Connection URL
-var dburl = 'mongodb://'+config.mongo.user+':'+config.mongo.pw+'@ds061611.mongolab.com:61611/lolurf';
+var dburl = 'mongodb://'+config.mongo.user+':'+config.mongo.pw+'@'+config.mongo.host+':'+config.mongo.port+'/'+config.mongo.db;
 // connect to the Server
 MongoClient.connect(dburl, function(err, db) {
 	assert.equal(null, err);
@@ -29,6 +62,7 @@ MongoClient.connect(dburl, function(err, db) {
 	});
 });
 
+var matchesArray = [];
 var start = process.argv[2];
 var end = process.argv[3];
 start = 1427873700000;
