@@ -31,4 +31,4 @@ node_modules
 /.c9/
 
 #config
-#/config/config.js
+/config/config.js
