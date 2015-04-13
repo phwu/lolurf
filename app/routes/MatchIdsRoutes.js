@@ -9,5 +9,9 @@ module.exports = function(app) {
 	app.route('/matches/:date')
 		.get(matchIds.matchIdsByDate);
 
-	app.param('date', matchIds.matchIdsByDate);
+	app.route('/matchesCount')
+		.get(matchIds.totalMatches);
+		
+	app.route('/matchesCount/:date')
+		.get(matchIds.matchCountByDate);
 };

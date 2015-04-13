@@ -21,16 +21,36 @@ exports.list = function(req, res) {
 /**
 * List Matches by Date
 */
-exports.matchIdsByDate = function(req, res, next, date) {
+exports.matchIdsByDate = function(req, res) {
+	var date = req.params.date;
+	console.log(req.params.date);
 	MatchIds.find({date: date}).exec(function(err, matchIds) {
-		console.log(req);
-		if (err) return next(err);
-		if (!matchIds) {
-			return res.status(404).send({
-				message: 'Matches not found'
-			});
+		if(err) {
+			return res.status(400).send({message: errorHandler.getErrorMEssage(err)});
+		} else {
+			res.json(matchIds);
 		}
-		req.matchIds = matchIds;
-		next();
 	});
-}
+};
+
+exports.totalMatches = function(req, res) {
+	MatchIds.count().exec(function(err, matchIds) {
+		if(err) {
+			return res.status(400).send({message: errorHandler.getErrorMEssage(err)});
+		} else {
+			res.json(matchIds);
+		}
+	});
+};
+
+exports.matchCountByDate = function(req, res) {
+	var date = req.params.date;
+	console.log(req.params.date);
+	MatchIds.count({date: date}).exec(function(err, matchIds) {
+		if(err) {
+			return res.status(400).send({message: errorHandler.getErrorMEssage(err)});
+		} else {
+			res.json(matchIds);
+		}
+	});
+};
