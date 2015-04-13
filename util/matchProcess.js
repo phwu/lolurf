@@ -1,109 +1,73 @@
 /* *
-Due to the limitations of the mongo db accepting up to 1000 documents per batch
-the util class will accept time in Long type to process (insert into db collection)
+* The purpose of this program is to persist URF match ids
+*
+* Albeit this app uses Mongoose, the util was implemented prior to Mongoose Setup
+* Hence no .save()
+*
+* Due to the limitations of the mongo db accepting up to 1000 documents per batch
+* Currently manual insertion. If time permits, implement recursion to avoid limit
 * */
 
-var fs = require('fs');
 var https = require('https');
-var config = require('../config/');
+var config = require('../config/config');
 var MongoClient = require('mongodb').MongoClient,
 	assert = require('assert');
-/*var mongoose = require('mongoose');
-var uriUtil= require('mongoose-uri');
-
-var options = {
-	server: {
-		socketOptions: {
-			keepAlive: 1,
-			connectTimeOutMS: 30000
-		}
-	},
-	replset: {
-		socketOptions: {
-			keepAlive: 1,
-			connectTimeoutMS: 30000
-		}
-	}
-};
-
-var mongodbUri = 'mongodb://'+config.mongo.user+':'+config.mongo.pw+'@'+config.mongo.host+':'+config.mongo.port+'/'+config.mongo.db;
-var mongooseUri = uriUtil.formatMongoose(mongodbUri);
-
-mongoose.connect(mongooseUri, options);
-
-var db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error:'));
-
-db.once('open', function callback () {
-	
-	// game schema
-	var gameSchema = mongoose.Schema({
-		gameId: Number,
-		date: Number
-	});
-	
-	// store match document in a matchIds collectin
-	var Game = mongoose.model('games', gameSchema);
-	
-	
-});*/
 
 
 // Connection URL
-var dburl = 'mongodb://'+config.mongo.user+':'+config.mongo.pw+'@'+config.mongo.host+':'+config.mongo.port+'/'+config.mongo.db;
+var dburi = 'mongodb://'+config.db.user+':'+config.db.pw+'@'+config.db.host+':'+config.db.port+'/'+config.db.db;
 // connect to the Server
-MongoClient.connect(dburl, function(err, db) {
+MongoClient.connect(dburi, function(err, db) {
 	assert.equal(null, err);
 	console.log("Connected to db");
 	
 	insertMatches(db, function() {
     	db.close();
 	});
+
 });
 
 var matchesArray = [];
-var start = process.argv[2];
-var end = process.argv[3];
-start = 1427873700000;
-end = 1427873700000;
-var time = start;
-	
-//fs.readFile('../etc/passwd', function (err, data) {
-//    if (err) throw err;
-	
-	// for april 1, first record
-	//var startLong = 1427865900000;
+var time, start, end;
+
+// for april 1, first record 1427865900000;
+// remember to change
+start = 1427876400000+300000; //this is the prev end + 5min for next iteration
+end = start + (300000*3); // may have to change based on peak hrs
+time = start;
 
 	// add 5min per iteration
-    for(start; start <= end; start = start + 300000) {
+    for(start; start < end+1; start = start + 300000) {
         // api challenge bucket - GET
         var url = 'https://na.api.pvp.net/api/lol/na/v4.1/game/ids?beginDate=' 
 	        + start.toString().substring(0,10) + "&api_key=" + config.api_key;
 	        
 	   	https.get(url, function (res) {
     	    console.log("Response : " + res.statusCode);
-	    	    
+	    	var data = [];    
+
     		res.on('data', function(bucket) {
-    			// only add if valid response
-    			if(res.statusCode == 200) {
-		   			var obj = JSON.parse(bucket);
+    			data += bucket;
+	   		});
+	   		res.on('end', function() {
+	   			if(res.statusCode == 200) {
+		   			var obj = JSON.parse(data);
 		   			
 		   			for(var k = 0; k < obj.length; k++) {
 		   				var jsonData = {};
 		   				jsonData.gameId = obj[k];
 		   				jsonData.date = time;
-		   				//matchesArray.push(jsonData);
+		   				matchesArray.push(jsonData);
 		   				console.log(time + " - " +obj[k]);
 		   			}
     			}
     			time = time + 300000;
 	   		});
+
 	   	}).on('error', function(e) {
 	   	    console.log("Got error: " + e.message);
 	   	});
 	}
-//});
 
 var insertMatches = function(db, callback) {
 	// Get matchIds collection
