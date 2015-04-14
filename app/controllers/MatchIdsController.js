@@ -23,7 +23,6 @@ exports.list = function(req, res) {
 */
 exports.matchIdsByDate = function(req, res) {
 	var date = req.params.date;
-	console.log(req.params.date);
 	MatchIds.find({date: date}).exec(function(err, matchIds) {
 		if(err) {
 			return res.status(400).send({message: errorHandler.getErrorMEssage(err)});
@@ -33,24 +32,29 @@ exports.matchIdsByDate = function(req, res) {
 	});
 };
 
+/**
+* List Total Matches
+*/
 exports.totalMatches = function(req, res) {
-	MatchIds.count().exec(function(err, matchIds) {
+	MatchIds.count().exec(function(err, matchCount) {
 		if(err) {
 			return res.status(400).send({message: errorHandler.getErrorMEssage(err)});
 		} else {
-			res.json(matchIds);
+			res.json(matchCount);
 		}
 	});
 };
 
+/**
+* List match count for Date
+*/
 exports.matchCountByDate = function(req, res) {
 	var date = req.params.date;
-	console.log(req.params.date);
-	MatchIds.count({date: date}).exec(function(err, matchIds) {
+	MatchIds.count({date: date}).exec(function(err, matchCount) {
 		if(err) {
 			return res.status(400).send({message: errorHandler.getErrorMEssage(err)});
 		} else {
-			res.json(matchIds);
+			res.json(matchCount);
 		}
 	});
 };
