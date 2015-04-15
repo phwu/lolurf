@@ -1,28 +1,9 @@
-/* *
-* The purpose of this program is to persist URF match data from match
-*
-* Albeit this app uses Mongoose, I decided I only wanted the utils to be writing to the db
-* Hence no POST/UPDATE/CREATE/INSERT
-*
-* Due to the limitations of the mongo db accepting up to 1000 documents per batch
-* inserting document 1 at a time
-* */
-
 var https = require('https');
 var config = require('../config/config');
 var MongoClient = require('mongodb').MongoClient,
 	assert = require('assert');
 
-
-// cycle through the batches
-for(var cyc = 1; cyc < 10; cyc++) {
-
-	// these arrays will hold the 'new' jsons 
-	// will hold the documents to insert into collections
-	var teamDocs = [];	// should have 2
-	var banDocs = [];	// should have 6
-	var partDocs = [];	// should have 10
-
+var cyc = 1;
 	var matchesUrl = 'https://lolurf-phwu-1.c9.io/matches/'+cyc;
 
 	https.get(matchesUrl, function (res) {
@@ -41,16 +22,20 @@ for(var cyc = 1; cyc < 10; cyc++) {
 	   				//console.log(obj.matchId);
 				    matchesArray.push(obj.matchId);
 				}
-				
-				insertMatchStats(matchesArray);
-				
+
+				insertMatches(matchesArray);
 	   		});
 	}).on('error', function(e) {
 	   	    console.log("Got error: " + e.message);
 	});
 
-	var insertMatchStats = function(matchesArray) {
-		// for every match from batch cyc in matchesArray
+var insertMatches = function(matchesArray) {
+// Connection URL
+	var dburi = 'mongodb://'+config.db.user+':'+config.db.pw+'@'+config.db.host+':'+config.db.port+'/'+config.db.db;
+	MongoClient.connect(dburi, function(err, db) {
+		assert.equal(null, err);
+		console.log("Connected to db");
+
 		for (var id in matchesArray) {
 			
 			// get match id's stats from Riot's Match API
@@ -74,7 +59,7 @@ for(var cyc = 1; cyc < 10; cyc++) {
 						
 						// let's create the team/ban docs and push them into the arrays
 						for(var i in teamObjs){
-							//banDocs = [];
+							banDocs = [];
 							// match the MatchTeamStats Model
 							var team = {};
 							team.match = {};
@@ -87,7 +72,7 @@ for(var cyc = 1; cyc < 10; cyc++) {
 							team.team.towerKills = teamObjs[i].towerKills;
 							team.team.dragonKills = teamObjs[i].dragonKills;
 							team.team.baronKills = teamObjs[i].baronKills;
-							teamDocs.push(team);
+							//teamDocs.push(team);
 							
 							var banObjs = teamObjs[i].bans;
 							for(var j in banObjs) {
@@ -95,10 +80,10 @@ for(var cyc = 1; cyc < 10; cyc++) {
 								ban.matchId = matchObj.matchId;
 								ban.champIdBan = banObjs[j].championId;
 								banDocs.push(ban);
-								insertBans(ban);
-								//console.log(banDocs);
+								doInsert(db, ban);
 							}
-//							insertBans(banDocs);
+//							console.log(banDocs);
+//							doInsert(db, banDocs);
 						}		
 						
 						//assign the values to fields within respective doc templates
@@ -112,36 +97,19 @@ for(var cyc = 1; cyc < 10; cyc++) {
 			}).on('error', function(e) {
 		   	    console.log("Got error: " + e.message);
 		   	});	
-		   	
+		   	console.log("END");
 		}
-	}
-
-	break;
-
-}
-
-var insertBans = function (docs) {
-	// Connection URL
-	var dburi = 'mongodb://'+config.db.user+':'+config.db.pw+'@'+config.db.host+':'+config.db.port+'/'+config.db.db;
-	MongoClient.connect(dburi, function(err, db) {
-		assert.equal(null, err);
-		console.log("Connected to db");
-
-		doInsert(db, docs, function() {this.db.close()});
 
 	});
-
 }
 
-
-
-var doInsert= function(db, banDocs, callback) {
+var doInsert= function(db, docs) {
 	var matchBansCollection = db.collection('matchBans');
 	// Insert bucket data into collection
-	matchBansCollection.insert(banDocs, function(err, result) {
+	matchBansCollection.insert(docs, function(err, result) {
 		assert.equal(err, null);
 		console.log("data added");
-		callback(result);
+		//callback(result);
 	});
 
 }

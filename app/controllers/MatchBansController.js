@@ -34,7 +34,7 @@ exports.totalBans = function(req, res) {
 /**
  * Ban counts for all champs
  */
-exports.bansChampId = function(req, res) {
+exports.bansCountAll = function(req, res) {
 	MatchBans
 	.aggregate()
 	.group(
@@ -53,12 +53,14 @@ exports.bansChampId = function(req, res) {
 }
 
 /**
-* Gimme the count of bans for champId
+* Gimme the count of bans for champId -- NOT WORKING
 */
 exports.bansChampId = function(req, res) {
 	var champId = req.params.champId;
+	console.log(champId);
 	MatchBans
 	.aggregate()
+	.match({ champIdBan: champId })
 	.group(
 		{
 			_id: champId,

@@ -3,6 +3,7 @@
 var matchBans = require('../../app/controllers/MatchBansController');
 
 module.exports = function(app) {
+
 	app.route('/bans')
 		.get(matchBans.list);	
 
@@ -15,4 +16,5 @@ module.exports = function(app) {
 		
 	app.route('/bans/count/:champId')
 		.get(matchBans.bansChampId);
+		
 };
