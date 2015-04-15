@@ -11,23 +11,9 @@ var mongoose = require('mongoose'),
 exports.list = function(req, res) {
 	MatchBans.find().exec(function(err, matchBans) {
 		if(err) {
-			return res.status(400).send({message: errorHandler.getErrorMEssage(err)});
+			return res.status(400).send({message: errorHandler.getErrorMessage(err)});
 		} else {
 			res.json(matchBans);
-		}
-	});
-};
-
-/**
-* List bans by match Id
-*/
-exports.bansByMatchId = function(req, res) {
-	var matchId = req.params.matchId;
-	MatchBans.find({matchId: matchId}).exec(function(err, matchIds) {
-		if(err) {
-			return res.status(400).send({message: errorHandler.getErrorMEssage(err)});
-		} else {
-			res.json(matchIds);
 		}
 	});
 };
@@ -38,9 +24,53 @@ exports.bansByMatchId = function(req, res) {
 exports.totalBans = function(req, res) {
 	MatchBans.count().exec(function(err, bansCount) {
 		if(err) {
-			return res.status(400).send({message: errorHandler.getErrorMEssage(err)});
+			return res.status(400).send({message: errorHandler.getErrorMessage(err)});
 		} else {
 			res.json(bansCount);
 		}
 	});
 };
+
+/**
+ * Ban counts for all champs
+ */
+exports.bansChampId = function(req, res) {
+	MatchBans
+	.aggregate()
+	.group(
+		{
+			_id: '$champIdBan',
+			totalBans: {$sum: 1}
+		}	
+	)
+	.exec(function(err, bansCount) {
+		if(err) {
+			return res.status(400).send({message: errorHandler.getErrorMessage(err)});
+		} else {
+			res.json(bansCount);
+		}
+	});
+}
+
+/**
+* Gimme the count of bans for champId
+*/
+exports.bansChampId = function(req, res) {
+	var champId = req.params.champId;
+	MatchBans
+	.aggregate()
+	.group(
+		{
+			_id: champId,
+			totalBans: {$sum: 1}
+		}
+	)
+	.exec(function(err, bansCount) {
+		if(err) {
+			return res.status(400).send({message: errorHandler.getErrorMessage(err)});
+		} else {
+			res.json(bansCount);
+		}
+	});
+};
+

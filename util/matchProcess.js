@@ -1,19 +1,19 @@
 /* *
-* The purpose of this program is to persist URF match ids
+* The purpose of this program is to persist URF match ids from api-challenge
 *
 * Albeit this app uses Mongoose, the util was implemented prior to Mongoose Setup
 * Hence no .save()
 *
-* Due to the limitations of the mongo db accepting up to 1000 documents per batch
-* Currently manual insertion. If time permits, implement recursion to avoid limit
+* Wrote this program first, did not realize that mongodb has a 1k row limit.
+* Currently populated manually due to time constraints
 * */
 
 var https = require('https');
 var config = require('../config/config');
 var MongoClient = require('mongodb').MongoClient,
 	assert = require('assert');
-
-
+	
+	
 // Connection URL
 var dburi = 'mongodb://'+config.db.user+':'+config.db.pw+'@'+config.db.host+':'+config.db.port+'/'+config.db.db;
 // connect to the Server
@@ -27,13 +27,27 @@ MongoClient.connect(dburi, function(err, db) {
 
 });
 
+
+var insertMatches = function(db, callback) {
+	// Get matchIds collection
+	var collection = db.collection('matchIds');
+	var bulk = collection.initializeOrderedBulkOp();
+	// Insert bucket data into collection
+	collection.insert(matchesArray, function(err, result) {
+		assert.equal(err, null);
+		console.log("data added");
+		callback(result);
+	});
+}
+
+
 var matchesArray = [];
 var time, start, end;
 
 // for april 1, first record 1427865900000;
 // remember to change
-start = 1427876400000+300000; //this is the prev end + 5min for next iteration
-end = start + (300000*3); // may have to change based on peak hrs
+start = 1427880600000 + 300000; //this is the prev end + 5min for next iteration
+end = start + (300000*4); 
 time = start;
 
 	// add 5min per iteration
@@ -55,8 +69,9 @@ time = start;
 		   			
 		   			for(var k = 0; k < obj.length; k++) {
 		   				var jsonData = {};
-		   				jsonData.gameId = obj[k];
+		   				jsonData.matchId = obj[k];
 		   				jsonData.date = time;
+		   				jsonData.batch = 3;
 		   				matchesArray.push(jsonData);
 		   				console.log(time + " - " +obj[k]);
 		   			}
@@ -68,14 +83,4 @@ time = start;
 	   	    console.log("Got error: " + e.message);
 	   	});
 	}
-
-var insertMatches = function(db, callback) {
-	// Get matchIds collection
-	var collection = db.collection('matchIds');
-	// Insert bucket data into collection
-	collection.insert(matchesArray, function(err, result) {
-		assert.equal(err, null);
-		console.log("data added");
-		callback(result);
-	});
-}
+	

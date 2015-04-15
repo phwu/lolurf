@@ -3,7 +3,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
-var matchPlayerStatsSchema = new Schema ({
+var MatchPlayerStatsSchema = new Schema ({
 	matchId: Number,
 	teamId: Number,
 	participant: {
@@ -25,6 +25,9 @@ var matchPlayerStatsSchema = new Schema ({
 		kills: Number,
 		totalHeals: Number
 	}
+},
+{
+	collection: 'matchPlayerStats'
 });
 
 mongoose.model('MatchPlayerStats', MatchPlayerStatsSchema);

@@ -3,10 +3,10 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
-// gameId is matchId; collection name already established in mongodb
 var MatchIdsSchema = new Schema({
-	gameId: Number,
-	date: Number
+	matchId: Number,
+	date: Number,
+	batch: Number
 },
 {
 	collection: 'matchIds'

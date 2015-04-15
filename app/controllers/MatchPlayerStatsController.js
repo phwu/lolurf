@@ -2,18 +2,18 @@
 
 var mongoose = require('mongoose'),
 	errorHandler = require('./ErrorsServerController'),
-	MatchTeamStats = mongoose.model('MatchTeamStats'),
+	MatchPlayerStats = mongoose.model('MatchPlayerStats'),
 	_ = require('lodash');
 
 /**
-* List the team stats
+* List the player stats for URF matches (no summoner Ids provided)
 */
 exports.list = function(req, res) {
-	MatchTeamStats.find().exec(function(err, matchTeamStats) {
+	MatchPlayerStats.find().exec(function(err, matchPlayerStats) {
 		if(err) {
 			return res.status(400).send({message: errorHandler.getErrorMessage(err)});
 		} else {
-			res.json(matchTeamStats);
+			res.json(matchPlayerStats);
 		}
 	});
 };
@@ -23,7 +23,7 @@ exports.list = function(req, res) {
 */
 exports.objKills = function(req,res) {
 	var objKills = req.params.objKills;
-	MatchTeamStats
+	MatchPlayerStats
 		.aggregate()
 		.group(
 			{ 
@@ -47,7 +47,7 @@ exports.objKills = function(req,res) {
 * duration time stats for all matches
 */
 exports.duration = function(req, res) {
-	MatchTeamStats
+	MatchPlayerStats
 		.aggregate()
 		.group(
 			{ 

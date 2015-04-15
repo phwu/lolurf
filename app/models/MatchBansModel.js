@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var MatchBansSchema = new Schema({
 	matchId: Number,
-	champBan: String
+	champIdBan: Number
 },
 {
 	collection: 'matchBans'
