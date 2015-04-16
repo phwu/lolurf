@@ -13,8 +13,16 @@ module.exports = function(app) {
 // order matters
 	app.route('/bans/count/all')
 		.get(matchBans.bansCountAll);
-		
-	app.route('/bans/count/:champId')
+/*	
+	// bans from 1st pick	
+	app.route('/bans/count/all/1')
+	// bans from 2nd pick	
+	app.route('/bans/count/all/2')
+	// bans from 3rd pick	
+	app.route('/bans/count/all/3')
+*/
+// not working right now		
+/*	app.route('/bans/count/:champId')
 		.get(matchBans.bansChampId);
-		
+		*/
 };

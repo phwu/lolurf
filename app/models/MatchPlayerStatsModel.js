@@ -8,9 +8,9 @@ var MatchPlayerStatsSchema = new Schema ({
 	teamId: Number,
 	participant: {
 		id: Number,
-		champ: String,
-		spell1: String,
-		spell2: String,
+		champId: Number,
+		spell1Id: Number,
+		spell2Id: Number,
 		highestAchievedSeasonTier: String,
 		totalDmgTaken: Number,
 		pentaKills: Number,

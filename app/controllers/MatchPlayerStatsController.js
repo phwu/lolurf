@@ -19,50 +19,49 @@ exports.list = function(req, res) {
 };
 
 /**
-* kill stats for :objKills for all matches
+* Use for kills, gold, wards, etc.
 */
-exports.objKills = function(req,res) {
-	var objKills = req.params.objKills;
+exports.getObj = function(req,res) {
+	var obj = req.params.obj;
 	MatchPlayerStats
 		.aggregate()
 		.group(
 			{ 
 				_id: null, 
-				totalKills: {$sum: '$team.'+objKills},
-				avgKills: {$avg: '$team.'+objKills},
-				minKills: {$min: '$team.'+objKills},
-				maxKills: {$max: '$team.'+objKills}
+				total: {$sum: '$participant.'+obj},
+				avg: {$avg: '$participant.'+obj},
+				min: {$min: '$participant.'+obj},
+				max: {$max: '$participant.'+obj}
 			}
 		)
-		.exec(function(err, kills) {
+		.exec(function(err, o) {
 			if(err) {
 				return res.status(400).send({message: errorHandler.getErrorMessage(err)});
 			} else {
-				res.json(kills);
+				res.json(o);
 			}
 	});
 };
 
 /**
-* duration time stats for all matches
+* Ideally used for champId and highestTitle
 */
-exports.duration = function(req, res) {
+exports.sc = function(req, res) {
+	var sc = req.params.sc;
 	MatchPlayerStats
 		.aggregate()
 		.group(
 			{ 
-				_id: null, 
-				totalDuration: {$sum: { $divide: ['$match.duration', 2] }},
-				avgDuration: {$avg: '$match.duration'},
-				minDuration: {$min: '$match.duration'},
-				maxDuration: {$max: '$match.duration'}
+				_id: '$participant.sc', 
+				playerCount: {$sum: 1}
 			}
 		)
-		.exec(function(err, kills) {
+		.exec(function(err, o) {
 			if(err) {
 				return res.status(400).send({message: errorHandler.getErrorMessage(err)});
 			} else {
-				res.json(kills);
+				res.json(o);
 			}
 	});
 }
+

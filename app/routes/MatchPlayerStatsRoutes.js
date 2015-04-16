@@ -6,11 +6,11 @@ module.exports = function(app) {
 	app.route('/playerStats')
 		.get(matchPlayerStats.list);	
 
-// order matters
-//	app.route('/playerStats/duration')
-//		.get(matchPlayerStats.duration);
 
-//	app.route('/playerStats/:objKills')
-//		.get(matchPlayerStats.objKills);
+	app.route('/playerStats/sumcounts/:sc')
+		.get(matchPlayerStats.sc);
+
+	app.route('/playerStats/:obj')
+		.get(matchPlayerStats.getObj);
 
 };

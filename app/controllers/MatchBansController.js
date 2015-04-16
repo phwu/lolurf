@@ -32,7 +32,7 @@ exports.totalBans = function(req, res) {
 };
 
 /**
- * Ban counts for all champs
+ * Ban counts for all champs, in desc order
  */
 exports.bansCountAll = function(req, res) {
 	MatchBans
@@ -43,6 +43,7 @@ exports.bansCountAll = function(req, res) {
 			totalBans: {$sum: 1}
 		}	
 	)
+	.sort({totalBans: -1})
 	.exec(function(err, bansCount) {
 		if(err) {
 			return res.status(400).send({message: errorHandler.getErrorMessage(err)});
