@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="urfApp">
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.3.15/angular-route.js"></script>
+        <script type="text/javascript" src="application.js"></script>
+        <div header></div>
+    </head>
+    <body class="container" ng-controller="DashboardCtlr">
+        <div class="panel panel-info">
+            <div class="panel-heading">Future Enhancements:</div>
+            <p>
+                <ul>
+                    <li>view top 5 champs banned via picks (give  %)</li>
+                    <li>allow a widget to search how many times (NUM) a champ has been banned via search</li>
+                </ul>
+            </p>
+        </div>
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Champion Bans by %</div>
+                        <!-- Table -->
+                        <table class="table">
+                            <tr>
+                                <th class="text-center">Id</th>
+                                <th class="text-center">Total (%)</th>
+                            </tr>
+                            <tr ng-repeat="ban in bans">
+                                <td class="text-center">{{ban._id}}</td>
+                                <td class="text-center">{{ ban.totalBans / totalBans * 100 | number : 2}}</td>
+                            </tr>
+                        </table>
+                    </div>
+            </div>
+
+    </body>
+    <div footer></div>
+</html>
