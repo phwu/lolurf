@@ -1,9 +1,19 @@
+/**
+ * The purpose of this utility class is to take the match ids retreieved from the api-challenge endpoint
+ * and persist the match data into the applications own backend. This would avoid the limitation
+ * of being restricted to X calls per Y minutes.
+ * 
+ * The utility currently is coded in a way that it will loop through the batch cycles that the 
+ * match ids were retreieved in and process the match data from Riot's API. 
+ * 
+ */
+
 var https = require('https');
 var config = require('../config/config');
 var MongoClient = require('mongodb').MongoClient,
 	assert = require('assert');
 
-var cyc = 1;
+var cyc = 2;
 	var matchesUrl = 'https://lolurf-phwu-1.c9.io/matches/'+cyc;
 
 	https.get(matchesUrl, function (res) {
@@ -57,9 +67,8 @@ var insertMatches = function(matchesArray) {
 						var teamObjs = matchObj.teams;
 						var partObjs = matchObj.participants;
 						
-						// let's create the team/ban docs and push them into the arrays
+						// let's create the team/ban docs and push them into their collections
 						for(var i in teamObjs){
-							banDocs = [];
 							// match the MatchTeamStats Model
 							var team = {};
 							team.match = {};
@@ -72,38 +81,60 @@ var insertMatches = function(matchesArray) {
 							team.team.towerKills = teamObjs[i].towerKills;
 							team.team.dragonKills = teamObjs[i].dragonKills;
 							team.team.baronKills = teamObjs[i].baronKills;
-							//teamDocs.push(team);
 							
 							var banObjs = teamObjs[i].bans;
 							for(var j in banObjs) {
 								var ban = {};
 								ban.matchId = matchObj.matchId;
 								ban.champIdBan = banObjs[j].championId;
-								banDocs.push(ban);
-								doInsert(db, ban);
+//								insertBan(db, ban); 
 							}
-//							console.log(banDocs);
-//							doInsert(db, banDocs);
-						}		
-						
-						//assign the values to fields within respective doc templates
-						//console.log(banDocs);
-						//console.log(teamDocs);
-						//console.log(partDocs);
 
+//							console.log(team);
+//							insertTeamStat(db, team);
+						} // end Team
+						
+						// now we'll make player docs and push them into the collection
+						var partObjs = matchObj.participants;
+						for(var j in partObjs) {
+								
+							var part = {};
+							part.participant = {};
+								
+							part.matchId = matchObj.matchId;
+							part.teamId = partObjs[j].teamId; 
+							part.participant.id = partObjs[j].participantId;
+							part.participant.champId = partObjs[j].championId;
+							part.participant.spell1Id = partObjs[j].spell1Id;
+							part.participant.spell2Id = partObjs[j].spell2Id;
+							part.participant.highestAchievedSeasonTier = partObjs[j].highestAchievedSeasonTier;
+							part.participant.totalDmgTaken = partObjs[j].stats.totalDamageTaken;
+							part.participant.pentaKills = partObjs[j].stats.pentaKills;
+							part.participant.deaths = partObjs[j].stats.deaths;
+							part.participant.assists = partObjs[j].stats.assists;
+							part.participant.totalDmgDealtToChamps = partObjs[j].stats.totalDamageDealtToChampions;
+							part.participant.largestKillingSpree = partObjs[j].stats.largestKillingSpree;
+							part.participant.minionsKilled = partObjs[j].stats.minionsKills;
+							part.participant.goldEarned = partObjs[j].stats.goldEarned;
+							part.participant.wardsPlaced = partObjs[j].stats.wardsPlaced;
+							part.participant.killingSprees = partObjs[j].stats.killingSprees;
+							part.participant.kills = partObjs[j].stats.kills;
+							part.participant.totalHeals = partObjs[j].stats.totalHeal;
+							
+							//console.log(part);
+							insertPlayerStat(db, part);
+						} // end player
 
 					});
 				}
 			}).on('error', function(e) {
 		   	    console.log("Got error: " + e.message);
 		   	});	
-		   	console.log("END");
 		}
-
 	});
 }
 
-var doInsert= function(db, docs) {
+var insertBan= function(db, docs) {
 	var matchBansCollection = db.collection('matchBans');
 	// Insert bucket data into collection
 	matchBansCollection.insert(docs, function(err, result) {
@@ -111,5 +142,24 @@ var doInsert= function(db, docs) {
 		console.log("data added");
 		//callback(result);
 	});
+}
 
+var insertTeamStat= function(db, docs) {
+	var matchTeamStatsCollection = db.collection('matchTeamStats');
+	// Insert bucket data into collection
+	matchTeamStatsCollection.insert(docs, function(err, result) {
+		assert.equal(err, null);
+		console.log("data added");
+		//callback(result);
+	});
+}
+
+var insertPlayerStat= function(db, docs) {
+	var matchPlayerStatsCollection = db.collection('matchPlayerStats');
+	// Insert bucket data into collection
+	matchPlayerStatsCollection.insert(docs, function(err, result) {
+		assert.equal(err, null);
+		console.log("data added");
+		//callback(result);
+	});
 }
