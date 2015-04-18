@@ -86,7 +86,9 @@ module.exports = function(db) {
 	app.disable('x-powered-by');
 
 	// Setting the app router and static folder
-	app.use(express.static(path.resolve('./public')));
+//	app.use(express.static(path.resolve('./public')));
+app.set('port', (process.env.PORT || 3000));
+app.use('/',express.static('./public'));
 
 	// CookieParser should be above session
 	app.use(cookieParser());
