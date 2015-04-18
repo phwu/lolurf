@@ -1,7 +1,8 @@
 #LOLURF
 
 ## URL
-https://lolurf-phwu-1.c9.io/#/
+https://lolurf-phwu-1.c9.io
+
  I will try to ensure the above link is always up. 
  Due to issues deploying to Heroku, using C9 
  as a temp solution.
