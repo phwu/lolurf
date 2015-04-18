@@ -87,6 +87,7 @@ module.exports = function(db) {
 
 	// Setting the app router and static folder
 //	app.use(express.static(path.resolve('./public')));
+app.use(express.static(__dirname));
 app.set('port', (process.env.PORT || 3000));
 app.use('/',express.static('./public'));
 
