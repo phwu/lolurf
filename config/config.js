@@ -38,11 +38,11 @@ module.exports = {
 		}
 	},
 	db: {
-		user: 'user',
-		pw: 'pw',
-		host: 'host name',
+		user: 'phwu',
+		pw: 'Kaiju5287',
+		host: 'ds061611.mongolab.com',
 		port: 61611,
-		db: 'db name',
+		db: 'lolurf',
 		options: {
 			server: {
 				socketOptions: {
@@ -58,7 +58,7 @@ module.exports = {
 			}
 		}
 	},
-	api_key: 'api key here'
+	api_key: '645c2e58-38b8-46f7-bbdf-c2fca571e672'
 };
 
 /**

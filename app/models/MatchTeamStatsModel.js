@@ -13,7 +13,8 @@ var MatchTeamStatsSchema = new Schema({
 		id: Number,
 		towerKills: Number,
 		dragonKills: Number,
-		baronKills: Number
+		baronKills: Number,
+		winner: String
 	}
 },
 {

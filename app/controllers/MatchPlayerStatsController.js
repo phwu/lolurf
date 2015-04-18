@@ -27,7 +27,7 @@ exports.getObj = function(req,res) {
 		.aggregate()
 		.group(
 			{ 
-				_id: null, 
+				_id: '$teamId', 
 				total: {$sum: '$participant.'+obj},
 				avg: {$avg: '$participant.'+obj},
 				min: {$min: '$participant.'+obj},
@@ -44,7 +44,8 @@ exports.getObj = function(req,res) {
 };
 
 /**
-* Ideally used for champId and highestTitle
+ *  Used to get row count for participant item
+* Ideally used for champId, highestTitle, spell Ids
 */
 exports.sc = function(req, res) {
 	var sc = req.params.sc;
@@ -52,10 +53,11 @@ exports.sc = function(req, res) {
 		.aggregate()
 		.group(
 			{ 
-				_id: '$participant.sc', 
-				playerCount: {$sum: 1}
+				_id: '$participant.' + sc, 
+				count: {$sum: 1}
 			}
 		)
+		.sort({ count: -1})
 		.exec(function(err, o) {
 			if(err) {
 				return res.status(400).send({message: errorHandler.getErrorMessage(err)});
@@ -65,3 +67,41 @@ exports.sc = function(req, res) {
 	});
 }
 
+// sort by "participant.spell2Id": 1, "_id": 1 for spell order by id
+exports.spell1Ids = function(req, res) {
+	MatchPlayerStats
+		.aggregate()
+		.group(
+			{ 
+				_id: '$participant.spell1Id', 
+				count: {$sum: 1}
+			}
+		)
+		.sort({ "count": -1 })
+		.exec(function(err, o) {
+			if(err) {
+				return res.status(400).send({message: errorHandler.getErrorMessage(err)});
+			} else {
+				res.json(o);
+			}
+	});
+}
+
+exports.spell2Ids = function(req, res) {
+	MatchPlayerStats
+		.aggregate()
+		.group(
+			{ 
+				_id: '$participant.spell2Id', 
+				count: {$sum: 1}
+			}
+		)
+		.sort({ "count": -1 })
+		.exec(function(err, o) {
+			if(err) {
+				return res.status(400).send({message: errorHandler.getErrorMessage(err)});
+			} else {
+				res.json(o);
+			}
+	});
+}

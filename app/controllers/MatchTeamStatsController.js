@@ -27,13 +27,37 @@ exports.objKills = function(req,res) {
 		.aggregate()
 		.group(
 			{ 
-				_id: null, 
+				_id: '$team.id', 
 				totalKills: {$sum: '$team.'+objKills},
 				avgKills: {$avg: '$team.'+objKills},
 				minKills: {$min: '$team.'+objKills},
 				maxKills: {$max: '$team.'+objKills}
 			}
 		)
+		.sort({_id: 1})
+		.exec(function(err, kills) {
+			if(err) {
+				return res.status(400).send({message: errorHandler.getErrorMessage(err)});
+			} else {
+				res.json(kills);
+			}
+	});
+};
+
+/**
+* winner winner, chicken dinner -- this will show wins by team
+*/
+exports.winner = function(req,res) {
+	MatchTeamStats
+		.aggregate()
+		.match({ "team.winner" : "true" })
+		.group(
+			{ 
+				_id: '$team.id', 
+				totalWins: {$sum: 1},
+			}
+		)
+		.sort({_id: 1})
 		.exec(function(err, kills) {
 			if(err) {
 				return res.status(400).send({message: errorHandler.getErrorMessage(err)});

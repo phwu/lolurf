@@ -9,6 +9,9 @@ module.exports = function(app) {
 // order matters
 	app.route('/teamStats/duration')
 		.get(matchTeamStats.duration);
+		
+	app.route('/teamStats/winner')
+		.get(matchTeamStats.winner);
 
 	app.route('/teamStats/:objKills')
 		.get(matchTeamStats.objKills);

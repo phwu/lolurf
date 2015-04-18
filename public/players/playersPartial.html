@@ -1,0 +1,156 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Complete Player Stats</div>
+            <!-- Table -->
+            <table class="table">
+                <tr>
+                    <th></th>
+                    <th>Kills</th>
+                    <th>Deaths</th>
+                    <th>Assists</th>
+                    <th>Minions Killed</th>
+                    <th>Gold Earned</th>
+                    <th>Wards Placed</th>
+                    <th>Pentakills</th>
+                </tr>
+                <tr>
+                    <th>Avg</th>
+                    <td>{{(kills[0].avg + kills[1].avg)/2 | number : 2}}</td>
+                    <td>{{(deaths[0].avg + deaths[1].avg)/2 | number : 2}}</td>
+                    <td>{{(assists[0].avg + assists[1].avg)/2 | number : 2}}</td>
+                    <td>{{(minionsKilled[0].avg + minionsKilled[1].avg)/2 | number : 2}}</td>
+                    <td>{{(goldEarned[0].avg + goldEarned[1].avg)/2 | number : 2}}</td>
+                    <td>{{(wardsPlaced[0].avg + wardsPlaced[1].avg)/2 | number : 2}}</td>
+                    <td>{{(pentaKills[0].avg + pentaKills[1].avg)/2 | number : 2}}</td>
+                </tr>
+                <tr>
+                    <th>Min</th>
+                    <td>
+                        <div ng-if="kills[0].min > kills[1].min"> {{kills[0].min | number}}</div>
+                        <div ng-if="kills[0].min <= kills[1].min"> {{kills[1].min | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="deaths[0].min > deaths[1].min"> {{deaths[0].min | number}}</div>
+                        <div ng-if="deaths[0].min <= deaths[1].min"> {{deaths[1].min | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="assists[0].min > assists[1].min"> {{assists[0].min | number}}</div>
+                        <div ng-if="assists[0].min <= assists[1].min"> {{assists[1].min | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="minionsKilled[0].min > minionsKilled[1].min"> {{minionsKilled[0].min | number}}</div>
+                        <div ng-if="minionsKilled[0].min <= minionsKilled[1].min"> {{minionsKilled[1].min | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="goldEarned[0].min > goldEarned[1].min"> {{goldEarned[0].min | number}}</div>
+                        <div ng-if="goldEarned[0].min <= goldEarned[1].min"> {{goldEarned[1].min | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="wardsPlaced[0].min > wardsPlaced[1].min"> {{wardsPlaced[0].min | number}}</div>
+                        <div ng-if="wardsPlaced[0].min <= wardsPlaced[1].min"> {{wardsPlaced[1].min | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="pentaKills[0].min > pentaKills[1].min"> {{pentaKills[0].min | number}}</div>
+                        <div ng-if="pentaKills[0].min <= pentaKills[1].min"> {{pentaKills[1].min | number}}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Max</th>
+                    <td>
+                        <div ng-if="kills[0].max > kills[1].max"> {{kills[0].max | number}}</div>
+                        <div ng-if="kills[0].max <= kills[1].max"> {{kills[1].max | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="deaths[0].max > deaths[1].max"> {{deaths[0].max | number}}</div>
+                        <div ng-if="deaths[0].max <= deaths[1].max"> {{deaths[1].max | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="assists[0].max > assists[1].max"> {{assists[0].max | number}}</div>
+                        <div ng-if="assists[0].max <= assists[1].max"> {{assists[1].max | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="minionsKilled[0].max > minionsKilled[1].max"> {{minionsKilled[0].max | number}}</div>
+                        <div ng-if="minionsKilled[0].max <= minionsKilled[1].max"> {{minionsKilled[1].max | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="goldEarned[0].max > goldEarned[1].max"> {{goldEarned[0].max | number}}</div>
+                        <div ng-if="goldEarned[0].max <= goldEarned[1].max"> {{goldEarned[1].max | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="wardsPlaced[0].max > wardsPlaced[1].max"> {{wardsPlaced[0].max | number}}</div>
+                        <div ng-if="wardsPlaced[0].max <= wardsPlaced[1].max"> {{wardsPlaced[1].max | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="pentaKills[0].max > pentaKills[1].max"> {{pentaKills[0].max | number}}</div>
+                        <div ng-if="pentaKills[0].max <= pentaKills[1].max"> {{pentaKills[1].max | number}}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><strong>Total</strong></th>
+                    <td><strong>{{(kills[0].total + kills[1].total) | number }}</strong></td>
+                    <td><strong>{{(deaths[0].total + deaths[1].total) | number }}</strong></td>
+                    <td><strong>{{(assists[0].total + assists[1].total) | number }}</strong></td>
+                    <td><strong>{{(minionsKilled[0].total + minionsKilled[1].total) | number }}</strong></td>
+                    <td><strong>{{(goldEarned[0].total + goldEarned[1].total) | number }}</strong></td>
+                    <td><strong>{{(wardsPlaced[0].total + wardsPlaced[1].total) | number}}</strong></td>
+                    <td><strong>{{(pentaKills[0].total + pentaKills[1].total) | number}}</strong></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top 5 Spells</div>
+            <!-- Table -->
+            <table class="table">
+                <tr>
+                    <th>Spell 1</th>
+                    <th>Spell 2</th>
+                    <th>% of Spell 1</th>
+                    <th>% of Spell 2</th>
+                </tr>
+                <tr ng-repeat="n in [0, 1, 2, 3, 4] track by $index">
+                    <td>{{ getSpellName(spell1Ids[n]._id) }}</td>
+                    <td>{{ getSpellName(spell2Ids[n]._id) }}</td>
+                    <td>{{ (spell1Ids[n].count)*100/spell1Count | number : 2 }}</td>
+                    <td>{{ (spell2Ids[n].count)*100/spell2Count | number : 2 }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top 5 Champs Played</div>
+            <!-- Table -->
+            <table class="table">
+                <tr>
+                    <th>Champion</th>
+                    <th>%</th>
+                </tr>
+                <tr ng-repeat="n in [0, 1, 2, 3, 4] track by $index">
+                    <td>{{ getChampName(champIds[n]._id) }} </td>
+                    <td>{{ (champIds[n].count) * 100/champIdsCountTotal | number : 2 }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top 5 Player Divisions</div>
+            <!-- Table -->
+            <table class="table">
+                <tr>
+                    <th>Tier</th>
+                    <th>%</th>
+                </tr>
+                <tr ng-repeat="n in [0, 1, 2, 3, 4] track by $index">
+                    <td>{{ tiers[n]._id }}</td>
+                    <td>{{ (tiers[n].count) * 100/tiersCountTotal | number : 2 }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

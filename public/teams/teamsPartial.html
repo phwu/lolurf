@@ -1,0 +1,124 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Match Stats</div>
+            <!-- Table -->
+            <table class="table">
+                <tr>
+                    <th></th>
+                    <th>Tower Kills</th>
+                    <th>Dragon Kills</th>
+                    <th>Baron Kills</th>
+                </tr>
+                <tr>
+                    <th>Avg</th>
+                    <td>{{(towerKills[0].avgKills + towerKills[1].avgKills)/2 | number : 2}}</td>
+                    <td>{{(dragonKills[0].avgKills + dragonKills[1].avgKills)/2 | number : 2}}</td>
+                    <td>{{(baronKills[0].avgKills + baronKills[1].avgKills)/2 | number : 2}}</td>
+                </tr>
+                <tr>
+                    <th>Min (Team)</th>
+                    <td>
+                        <div ng-if="towerKills[0].minKills > towerKills[1].minKills"> {{towerKills[0].minKills | number}}</div>
+                        <div ng-if="towerKills[0].minKills <= towerKills[1].minKills"> {{towerKills[1].minKills | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="dragonKills[0].minKills > dragonKills[1].minKills"> {{dragonKills[0].minKills | number}}</div>
+                        <div ng-if="dragonKills[0].minKills <= dragonKills[1].minKills"> {{dragonKills[1].minKills | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="baronKills[0].minKills > baronKills[1].minKills"> {{dragonKills[0].minKills | number}}</div>
+                        <div ng-if="baronKills[0].minKills <= baronKills[1].minKills"> {{dragonKills[1].minKills | number}}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Min (Match)</th>
+                    <td>{{(towerKills[0].minKills + towerKills[1].minKills) | number }}</td>
+                    <td>{{(dragonKills[0].minKills + dragonKills[1].minKills) | number }}</td>
+                    <td>{{(baronKills[0].minKills + baronKills[1].minKills) | number }}</td>
+                </tr>
+                <tr>
+                    <th>Max (Team)</th>
+                    <td>
+                        <div ng-if="towerKills[0].maxKills > towerKills[1].maxKills"> {{towerKills[0].maxKills | number}}</div>
+                        <div ng-if="towerKills[0].maxKills <= towerKills[1].maxKills"> {{towerKills[1].maxKills | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="dragonKills[0].maxKills > dragonKills[1].maxKills"> {{dragonKills[0].maxKills | number}}</div>
+                        <div ng-if="dragonKills[0].maxKills <= dragonKills[1].maxKills"> {{dragonKills[1].maxKills | number}}</div>
+                    </td>
+                    <td>
+                        <div ng-if="baronKills[0].maxKills > baronKills[1].maxKills"> {{dragonKills[0].maxKills | number}}</div>
+                        <div ng-if="baronKills[0].maxKills <= baronKills[1].maxKills"> {{dragonKills[1].maxKills | number}}</div>
+                </tr>
+                <tr>
+                    <th>Max (Match)</th>
+                    <td>{{(towerKills[0].maxKills + towerKills[1].maxKills) | number }}</td>
+                    <td>{{(dragonKills[0].maxKills + dragonKills[1].maxKills) | number }}</td>
+                    <td>{{(baronKills[0].maxKills + baronKills[1].maxKills) | number }}</td>
+                </tr>
+                <tr>
+                    <th><strong>Total</strong></th>
+                    <td><strong>{{(towerKills[0].totalKills + towerKills[1].totalKills) | number }}</strong></td>
+                    <td><strong>{{(dragonKills[0].totalKills + dragonKills[1].totalKills) | number }}</strong></td>
+                    <td><strong>{{(baronKills[0].totalKills + baronKills[1].totalKills) | number }}</strong></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+                
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Game Time Stats</div>
+            <!-- Table -->
+            <table class="table">
+                <tr>
+                    <th>Avg</th>
+                    <td>{{duration.avgDuration / 60 | number : 2}} min</td>
+                </tr>
+                <tr>
+                    <th>Shortest</th>
+                    <td>{{duration.minDuration / 60 | number : 2}} min</td>
+                </tr>
+                <tr>
+                    <th>Longest</th>
+                    <td>{{duration.maxDuration / 60 | number : 2}} min</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">Team Stats</div>
+            <!-- Table -->
+            <table class="table">
+                <tr>
+                    <th></th>
+                    <th>Avg Tower Kills</th>
+                    <th>Avg Dragon Kills</th>
+                    <th>Avg Baron Kills</th>
+                    <th>Games Won</th>
+                    <th>Win Rate (%)</th>
+                </tr>
+                <tr>
+                    <th>Team 1</th>
+                    <td>{{towerKills[0].avgKills | number : 2}}</td>
+                    <td>{{dragonKills[0].avgKills | number : 2}}</td>
+                    <td>{{baronKills[0].avgKills | number : 2}}</td>
+                    <td>{{winner[0].totalWins | number}}</td>
+                    <td>{{ winner[0].totalWins * 100 / (winner[0].totalWins + winner[1].totalWins) | number : 2}}</td>
+                </tr>
+                <tr>
+                    <th>Team 2</th>
+                    <td>{{towerKills[1].avgKills | number : 2}}</td>
+                    <td>{{dragonKills[1].avgKills | number : 2}}</td>
+                    <td>{{baronKills[1].avgKills | number : 2}}</td>
+                    <td>{{winner[1].totalWins | number}}</td>
+                    <td>{{ winner[1].totalWins * 100 / (winner[0].totalWins + winner[1].totalWins) | number : 2}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

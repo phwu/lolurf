@@ -1,0 +1,47 @@
+<div class="jumbotron">
+    <h1>The URF Games</h1>
+    <p>NA URF games consolidated for your reading pleasure.</p>
+    <p><a class="btn btn-primary btn-lg" href="#/about" role="button">Learn more</a></p>
+</div>
+        
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Top Champ Played</div>
+            <h1 class="text-center"> {{ getChampName(topChamp._id) }} </h1>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Total Time Played</div>
+            <h1 class="text-center">{{duration.totalDuration / (60*60*24) | number : 2}} days</h1>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Total Champion Bans</div>
+            <h1 class="text-center">{{totalBans | number}}</h1>
+        </div>
+    </div>
+</div>
+        
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Total Matches Played</div>
+            <h1 class="text-center">{{totalMatches | number}}</h1>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Total Gold Earned</div>
+            <h1 class="text-center">{{totalGold | number}}</h1>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Total Kills</div>
+            <h1 class="text-center">{{totalKills | number}}</h1>
+        </div>
+    </div>
+</div>

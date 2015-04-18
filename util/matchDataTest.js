@@ -13,7 +13,8 @@ var config = require('../config/config');
 var MongoClient = require('mongodb').MongoClient,
 	assert = require('assert');
 
-var cyc = 2;
+// last cycle completed 5 
+var cyc = 6;
 	var matchesUrl = 'https://lolurf-phwu-1.c9.io/matches/'+cyc;
 
 	https.get(matchesUrl, function (res) {
@@ -81,6 +82,7 @@ var insertMatches = function(matchesArray) {
 							team.team.towerKills = teamObjs[i].towerKills;
 							team.team.dragonKills = teamObjs[i].dragonKills;
 							team.team.baronKills = teamObjs[i].baronKills;
+							team.team.winner = ""+ teamObjs[i].winner;
 							
 							var banObjs = teamObjs[i].bans;
 							for(var j in banObjs) {
@@ -114,7 +116,7 @@ var insertMatches = function(matchesArray) {
 							part.participant.assists = partObjs[j].stats.assists;
 							part.participant.totalDmgDealtToChamps = partObjs[j].stats.totalDamageDealtToChampions;
 							part.participant.largestKillingSpree = partObjs[j].stats.largestKillingSpree;
-							part.participant.minionsKilled = partObjs[j].stats.minionsKills;
+							part.participant.minionsKilled = partObjs[j].stats.minionsKilled;
 							part.participant.goldEarned = partObjs[j].stats.goldEarned;
 							part.participant.wardsPlaced = partObjs[j].stats.wardsPlaced;
 							part.participant.killingSprees = partObjs[j].stats.killingSprees;

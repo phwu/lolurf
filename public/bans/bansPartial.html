@@ -1,0 +1,28 @@
+<div class="panel panel-info">
+    <div class="panel-heading">Future Enhancements:</div>
+    <p>
+        <ul>
+            <li>view top 5 champs banned via picks (give  %)</li>
+            <li>allow a widget to search how many times (NUM) a champ has been banned via search</li>
+        </ul>
+    </p>
+</div>
+        
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Champion Bans by %</div>
+            <!-- Table -->
+            <table class="table">
+                <tr>
+                    <th class="text-center">Id</th>
+                    <th class="text-center">Total (%)</th>
+                </tr>
+                <tr ng-repeat="ban in bans">
+                    <td class="text-center">{{ getChampName(ban._id) }}</td>
+                    <td class="text-center">{{ ban.totalBans / totalBans * 100 | number : 2}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

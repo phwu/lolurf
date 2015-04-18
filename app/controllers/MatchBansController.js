@@ -64,7 +64,7 @@ exports.bansChampId = function(req, res) {
 	.match({ champIdBan: champId })
 	.group(
 		{
-			_id: champId,
+			_id: null,
 			totalBans: {$sum: 1}
 		}
 	)

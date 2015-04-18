@@ -9,7 +9,7 @@ module.exports = function(app) {
 	app.route('/matches/count')
 		.get(matchIds.totalMatches);
 		
-	app.route('/matches/:batch(1|2|3)?')
+	app.route('/matches/:batch(1|2|3|4|5|6)?')
 		.get(matchIds.list);	
 
 	app.route('/matches/:date')

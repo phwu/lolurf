@@ -22,7 +22,7 @@ mongoose.connection.on('error', function(err) {
 var app = require('./config/express')(db);
 
 // Start app
-app.listen(config.port);
+app.listen(process.env.PORT);
 
 // Expose app
 exports = module.exports = app;
