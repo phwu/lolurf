@@ -8,9 +8,9 @@ https://lolurf-phwu-1.c9.io
  as a temp solution.
  
 ## How to Use
-- Configure config.js (setup db)
+- Configure config.js (setup db, api key)
 - Run utils to insert data into your db
-- Start backend
+- Start backend (node server)
 - Go to localhost:port
 
 ## Technologies
