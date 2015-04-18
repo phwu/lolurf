@@ -9,9 +9,12 @@ https://lolurf-phwu-1.c9.io
  
 ## How to Use
 - Configure config.js (setup db, api key)
+- Install node dependencies (npm install)
 - Run utils to insert data into your db
 - Start backend (node server)
 - Go to localhost:port
+
+You should not need to install bower components as I mainly used cdns.
 
 ## Technologies
 * MEAN
