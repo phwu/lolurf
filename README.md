@@ -9,6 +9,7 @@ https://lolurf-phwu-1.c9.io
  
 ## How to Use
 THIS CODE WILL NOT RUN STRAIGHT FROM A PULL. Some necessary steps:
+
 1. Configure config.js (setup db, api key -- I have setup read access to my db in the config if you want to just put in your own api key (skip 3 if so))
 
 2. Install node dependencies (npm install)
