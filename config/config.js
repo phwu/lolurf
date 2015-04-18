@@ -38,11 +38,11 @@ module.exports = {
 		}
 	},
 	db: {
-		user: 'user',
-		pw: 'pw',
-		host: 'host of db',
-		port: port of db,
-		db: 'db name',
+		user: 'tester1',
+		pw: 'tester1',
+		host: 'ds061611.mongolab.com',
+		port: 61611,
+		db: 'lolurf',
 		options: {
 			server: {
 				socketOptions: {
