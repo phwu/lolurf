@@ -1,3 +1,6 @@
+** Found a bug while deploying to Heroku. Since I did not run this on my local (I had a cloud dev space), I did not catch this bug till now. See issues for more details. Please be patient, I need to fix the frontend (partials not loading). I believe the backend is OK. **
+
+
 #LOLURF
 
 ## URL
