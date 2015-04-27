@@ -1,9 +1,9 @@
 **Found a bug while deploying to Heroku. Since I did not run this on my local (I had a cloud dev space), I did not catch this bug till now. See issues for more details. Please be patient, I need to fix the frontend (partials not loading). I believe the backend is OK.**
 
 
-#LOLURF
+#The URF Games
 ![alt text](http://i61.tinypic.com/25uktvl.png "Screenshot 1")
-
+![alt text](http://i59.tinypic.com/2hn9pqq.png "Screenshot 2")
 
 ## Backend
 REST backend established using Express and Node. Used utility classes to feed data into the application's db from Riot's API and dissected URF game data into respectful collections. This allowed me to utilize the data more easily when I created routes for them. For example: to see number of baron kills against all teams, the route would be /teamStats/baronKills . ONLY GET type routes implemented!!! I did not feel comfortable with the idea of the data being updated (why should it be?) so no POST/PUT/DELETE. This could be something easily implemented with Express though if you would like!
