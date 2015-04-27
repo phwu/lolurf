@@ -2,6 +2,8 @@
 
 
 #LOLURF
+![alt text](http://i61.tinypic.com/25uktvl.png "Screenshot 1")
+
 
 ## Backend
 REST backend established using Express and Node. Used utility classes to feed data into the application's db from Riot's API and dissected URF game data into respectful collections. This allowed me to utilize the data more easily when I created routes for them. For example: to see number of baron kills against all teams, the route would be /teamStats/baronKills . ONLY GET type routes implemented!!! I did not feel comfortable with the idea of the data being updated (why should it be?) so no POST/PUT/DELETE. This could be something easily implemented with Express though if you would like!
