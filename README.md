@@ -18,11 +18,11 @@ Links to several pages, including overall dashboard that supplies statistical in
 Currently frontend will not display properly due to partials not routing correctly via Angular. This is something I am trying to fix. I may need to remove partials and implment static pages (which is OK since the pages do not use similiar layouts). Will try to fix by Wednsday but currently on vacation x(
 
 ## URL
-**https://fast-everglades-8266.herokuapp.com**
+**https://fast-everglades-8266.herokuapp.com** (no partials templating)
 
-https://lolurf-phwu-1.c9.io
+https://lolurf-phwu-1.c9.io (partials templating)
 
-This app behaves the same, it just doesn't use partials (so no Angular routing). You can run api calls from this server too e.g. append /matchBans/count to the URL.
+The app behaves the same on both, the top just doesn't use partials (so no Angular routing). You can run api calls from both too e.g. append /matchBans/count to the URL. Bottom link may be down, it is an unstable box.
  
 ## How to Use
 THIS CODE WILL NOT RUN STRAIGHT FROM A PULL. Some necessary steps:
