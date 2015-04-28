@@ -19,6 +19,9 @@ Currently frontend will not display properly due to partials not routing correct
 
 ## URL
 **https://fast-everglades-8266.herokuapp.com**
+
+https://lolurf-phwu-1.c9.io
+
 This app behaves the same, it just doesn't use partials (so no Angular routing). You can run api calls from this server too e.g. append /matchBans/count to the URL.
  
 ## How to Use
