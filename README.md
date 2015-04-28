@@ -18,11 +18,8 @@ Links to several pages, including overall dashboard that supplies statistical in
 Currently frontend will not display properly due to partials not routing correctly via Angular. This is something I am trying to fix. I may need to remove partials and implment static pages (which is OK since the pages do not use similiar layouts). Will try to fix by Wednsday but currently on vacation x(
 
 ## URL
-https://lolurf-phwu-1.c9.io
-
- I will try to ensure the above link is always up but I have noticed C9 will kill the box every couple days. 
- Due to issues deploying to Heroku, using C9 
- as a temp solution.
+**https://fast-everglades-8266.herokuapp.com**
+This app behaves the same, it just doesn't use partials (so no Angular routing). You can run api calls from this server too e.g. append /matchBans/count to the URL.
  
 ## How to Use
 THIS CODE WILL NOT RUN STRAIGHT FROM A PULL. Some necessary steps:
